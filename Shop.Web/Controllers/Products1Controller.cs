@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Shop.Web.Data;
-using Shop.Web.Data.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿
 
 namespace Shop.Web.Controllers
 {
+    using Data;
+    using Data.Entities;
+    using Helpers;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
+
+
     public class Products1Controller : Controller
     {
         private readonly IRepository repository;
+        private readonly IUserHelper userHelper;
 
-        public Products1Controller(IRepository repository)
+        public Products1Controller(IRepository repository, IUserHelper userHelper)
         {
             this.repository = repository;
+            this.userHelper = userHelper;
         }
 
         // GET: Products1
@@ -52,6 +57,8 @@ namespace Shop.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                //TODO: Cambiar por el usuario logueado
+                product.User = await userHelper.GetUserByEmailAsync("pablolsperoni@gmail.com");
                 repository.AddProduct(product);
                 await repository.SaveAllAsync();
                 return RedirectToAction(nameof(Index));
@@ -128,8 +135,8 @@ namespace Shop.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = repository.GetProduct(id);
-            this.repository.RemoveProduct(product);
+            Product product = repository.GetProduct(id);
+            repository.RemoveProduct(product);
             await repository.SaveAllAsync();
             return RedirectToAction(nameof(Index));
         }
