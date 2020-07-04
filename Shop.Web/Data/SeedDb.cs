@@ -1,7 +1,6 @@
 ﻿namespace Shop.Web.Data
 
 {
-
     using Entities;
     using Helpers;
     using Microsoft.AspNetCore.Identity;
