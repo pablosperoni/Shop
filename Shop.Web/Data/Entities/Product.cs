@@ -36,7 +36,19 @@ namespace Shop.Web.Data.Entities
 
 
         public User User { get; set; }
-    }
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImageUrl))
+                {
+                    return null;
+                }
 
+                return $"https://shopweb20200705110423.azurewebsites.net{this.ImageUrl.Substring(1)}";
+            }
+        }
+    }
 }
+
 

@@ -3,7 +3,7 @@ namespace Shop.Web.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Shop.Web.Data.Entities;
+    using Entities;
 
     public class DataContext : IdentityDbContext<User>
 
